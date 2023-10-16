@@ -1,0 +1,24 @@
+{
+  "name": "incarnet-ui",
+  "version": "0.0.1",
+  "description": "Interface pour Intellicarnet",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.mjs release",
+    "serve": "node build.mjs serve"
+  },
+  "author": "dogeystamp",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@types/uuid": "^9.0.2",
+    "esbuild": "0.17.18",
+    "mithril": "^2.2.2",
+    "moment": "^2.29.4",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@craftamap/esbuild-plugin-html": "^0.5.0",
+    "@types/mithril": "^2.0.12"
+  }
+}
+
