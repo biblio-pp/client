@@ -1,0 +1,71 @@
+.form-button, .form-textbox {
+	font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.login-form {
+	display: inline-flex;
+	padding: 1em 4em;
+	flex-flow: column nowrap;
+	align-items: center;
+	border: solid #dddddd55 2px;
+	border-radius: .5vmin;
+	background: #fafafa;
+}
+
+.login-box {
+	text-align: center;
+}
+
+.form-textbox, .form-button, .form-upload {
+	display: block;
+}
+
+.form-textbox, .form-button {
+	margin: .5em 0;
+}
+
+.form-textbox, .form-button {
+	border: 2px solid #aaaaaa;
+	border-radius: 0.5vmin;
+	transition-duration: 0.1s;
+}
+
+.form-textbox:focus, .form-button:focus {
+	outline: none;
+	border: 2px solid #444444;
+}
+
+.form-checkbox-li {
+	list-style: none;
+}
+.form-checkbox {
+	margin-right: 1em;
+}
+.form-readonly {
+	opacity: 0.75;
+	pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	.login-form {
+		background: #55555555;
+	}
+	.form-button {
+		border: 2px solid #606060;
+	}
+	.form-textbox {
+		border: 2px solid #444444;
+	}
+	.form-button, .form-textbox {
+		background: #44444455;
+		color: inherit;
+	}
+	.form-button:disabled {
+		color: #444444;
+		border: 2px solid #505050;
+	}
+
+	.form-textbox:focus, .form-button:focus {
+		border: 2px solid #aaaaaa;
+	}
+}

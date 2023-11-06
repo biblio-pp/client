@@ -1,0 +1,16 @@
+body {
+	font: normal 18px/1.5 BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	margin: 0;
+}
+
+.layout {
+	margin: 0 auto;
+	width: 85vmin;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #202025;
+		color: #dddddd;
+	}
+}

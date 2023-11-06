@@ -1,0 +1,38 @@
+.pagelist {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.pagelist-number {
+	color: #888888;
+}
+
+.pagelist-number, .pagelist-cur {
+	margin: 0 .2em;
+	text-decoration: none;
+}
+
+.pagelist-next, .pagelist-prev {
+	color: #444444;
+	margin: 0 1em;
+}
+
+.pagelist-cur {
+	color: #555555;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+	.pagelist-next, .pagelist-prev {
+		color: #777777;
+	}
+	.pagelist-cur {
+		color: #bbbbbb;
+	}
+	.pagelist-number {
+		color: #999999;
+	}
+}

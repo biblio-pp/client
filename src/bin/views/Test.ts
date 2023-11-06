@@ -2,7 +2,7 @@ import m, { Component } from "mithril"
 
 const TestView: Component = {
 	view: () => {
-		return ["tes test 12 3"]
+		return [m(m.route.Link,  {href: "/dir/" }, "skdlfjs")]
 	}
 }
 
