@@ -22,7 +22,7 @@ const DirView: Component<DirView.Attrs> = {
 
 		let pathBuild = ""
 		const segments = curPath.split('/').map((dir) => {
-			pathBuild += dir
+			pathBuild += dir + "/"
 			return {full: pathBuild, base: dir}
 		})
 
@@ -64,7 +64,19 @@ const DirView: Component<DirView.Attrs> = {
 						await DirList.refresh(curPath)
 						m.redraw()
 					}
-				}, "Nouveau dossier")
+				}, "Nouveau dossier"),
+				m("button", {
+					onclick: async () => {
+						const name: string | null = window.prompt("Nom du fichier?")
+						if (name === null) {
+							return
+						}
+
+						await api.request({ url: "/fs/touch", params: { path: curPath + "/" + name }, method: "POST" })
+						await DirList.refresh(curPath)
+						m.redraw()
+					}
+				}, "Nouveau fichier"),
 			),
 		]
 
