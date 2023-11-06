@@ -1,5 +1,6 @@
 import m, { Component } from "mithril"
 import DirList from "../models/DirList"
+import { basename } from "../services/utils"
 
 declare namespace DirView {
 	interface State { }
@@ -12,11 +13,12 @@ const DirView: Component<DirView.Attrs> = {
 	oncreate: async (vnode) => {
 		await DirList.refresh(vnode.attrs.path)
 	},
-	view: () => {
+	view: (vnode) => {
 		const dirs = DirList.dirs.map(e => ({ name: e, type: "dir" }))
 		const files = DirList.files.map(e => ({ name: e, type: "file" }))
 
 		return [
+			m("h2", vnode.attrs.path),
 			m(".entrylist",
 				m("table.entrylist-table",
 					m("tr.entrylist",
@@ -34,7 +36,7 @@ const DirView: Component<DirView.Attrs> = {
 							m("td", m(m.route.Link, {
 								href: link,
 								selector: "a.entrylist-link",
-							}, entry.name)),
+							}, basename(entry.name))),
 							m("td", entry.type == "dir" ? "Dossier" : "Fichier"),
 						)
 					}),
