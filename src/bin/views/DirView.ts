@@ -1,6 +1,7 @@
 import m, { Component } from "mithril"
 import DirList from "../models/DirList"
 import { basename } from "../services/utils"
+import api from "../services/api"
 
 declare namespace DirView {
 	interface State { }
@@ -17,8 +18,19 @@ const DirView: Component<DirView.Attrs> = {
 		const dirs = DirList.dirs.map(e => ({ name: e, type: "dir" }))
 		const files = DirList.files.map(e => ({ name: e, type: "file" }))
 
+		const curPath = vnode.attrs.path || ""
+
+		let pathBuild = ""
+		const segments = curPath.split('/').map((dir) => {
+			pathBuild += dir
+			return {full: pathBuild, base: dir}
+		})
+
 		return [
-			m("h2", vnode.attrs.path),
+			curPath !== "" && m(m.route.Link, { href: "/dir/" }, "Retourner"),
+			m("h2", segments.map((segment) => {
+				return [m(m.route.Link, { href: "/dir/" + segment.full, selector: "a.entrylist-link" }, segment.base), m("t", "/")]
+			})),
 			m(".entrylist",
 				m("table.entrylist-table",
 					m("tr.entrylist",
@@ -41,6 +53,18 @@ const DirView: Component<DirView.Attrs> = {
 						)
 					}),
 				),
+				m("button", {
+					onclick: async () => {
+						const name: string | null = window.prompt("Nom du dossier?")
+						if (name === null) {
+							return
+						}
+
+						await api.request({ url: "/fs/mkdir", params: { path: curPath + "/" + name }, method: "POST" })
+						await DirList.refresh(curPath)
+						m.redraw()
+					}
+				}, "Nouveau dossier")
 			),
 		]
 
