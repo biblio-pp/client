@@ -15,7 +15,6 @@ function Editor(): Component<Editor.Attrs> {
 		oncreate: async function(vnode) {
 			await FileModel.read(vnode.attrs.path)
 			editor = new EasyMDE({
-				element: vnode.dom,
 				autoDownloadFontAwesome: true,
 				spellChecker: false,
 				status: false,
@@ -52,7 +51,7 @@ function Editor(): Component<Editor.Attrs> {
 			vnode.dom.parentNode.removeChild(vnode.dom)
 		},
 		view: (vnode) => {
-			return [
+			return m("",
 				m("textarea"),
 				m("button", {
 					onclick: async () => {
@@ -61,7 +60,7 @@ function Editor(): Component<Editor.Attrs> {
 						window.alert("Sauvegardé.")
 					}
 				}, "Sauvegarder")
-			]
+			)
 		},
 	}
 }
