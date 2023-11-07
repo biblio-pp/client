@@ -18,7 +18,8 @@ const FileModel = {
 		await api.request({
 			url: "/fs/write",
 			params: { path: path },
-			body: { content: FileModel.content }
+			body: { content: FileModel.content },
+			method: "POST",
 		})
 	},
 

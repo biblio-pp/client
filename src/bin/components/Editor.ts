@@ -51,8 +51,17 @@ function Editor(): Component<Editor.Attrs> {
 			editor.toTextArea()
 			vnode.dom.parentNode.removeChild(vnode.dom)
 		},
-		view: () => {
-			return m("textarea")
+		view: (vnode) => {
+			return [
+				m("textarea"),
+				m("button", {
+					onclick: async () => {
+						FileModel.content = editor.value()
+						await FileModel.write(vnode.attrs.path)
+						window.alert("Sauvegardé.")
+					}
+				}, "Sauvegarder")
+			]
 		},
 	}
 }
