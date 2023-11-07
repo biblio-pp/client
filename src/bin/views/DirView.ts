@@ -23,7 +23,7 @@ const DirView: Component<DirView.Attrs> = {
 		let pathBuild = ""
 		const segments = curPath.split('/').map((dir) => {
 			pathBuild += dir + "/"
-			return {full: pathBuild, base: dir}
+			return { full: pathBuild, base: dir }
 		})
 
 		return [
@@ -50,6 +50,29 @@ const DirView: Component<DirView.Attrs> = {
 								selector: "a.entrylist-link",
 							}, basename(entry.name))),
 							m("td", entry.type == "dir" ? "Dossier" : "Fichier"),
+							m("td", [
+								m("button", {
+									onclick: async (e: Event) => {
+										e.stopPropagation()
+
+										const conf: boolean = window.confirm("Vraiment supprimer?")
+										if (conf === false) {
+											return
+										}
+
+										try {
+											await api.request({ url: "/fs/del", params: { path: entry.name }, method: "POST" })
+										} catch (e) {
+											if (e.code == 400) {
+												window.alert("Incapable de supprimer ce fichier/dossier. Seul un dossier vide peut être supprimé.")
+												return
+											}
+										}
+										await DirList.refresh(curPath)
+										m.redraw()
+									}
+								}, "Supprimer"),
+							])
 						)
 					}),
 				),
