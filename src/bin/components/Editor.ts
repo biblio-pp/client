@@ -1,11 +1,19 @@
 import EasyMDE from "easymde"
-import m from "mithril"
+import m, { Component } from "mithril"
+import FileModel from "../models/File"
 
-function Editor() {
+declare namespace Editor {
+	interface Attrs {
+		path: string
+	}
+}
+
+function Editor(): Component<Editor.Attrs> {
 	var editor: EasyMDE
 
 	return {
-		oncreate: function(vnode) {
+		oncreate: async function(vnode) {
+			await FileModel.read(vnode.attrs.path)
 			editor = new EasyMDE({
 				element: vnode.dom,
 				autoDownloadFontAwesome: true,
@@ -36,6 +44,7 @@ function Editor() {
 				]
 				*/
 			})
+			editor.value(FileModel.content)
 		},
 		onremove: function(vnode) {
 			editor.cleanup()
@@ -44,7 +53,7 @@ function Editor() {
 		},
 		view: () => {
 			return m("textarea")
-		}
+		},
 	}
 }
 
