@@ -55,7 +55,7 @@ const DirView: Component<DirView.Attrs> = {
 									onclick: async (e: Event) => {
 										e.stopPropagation()
 
-										const conf: boolean = window.confirm("Vraiment supprimer?")
+										const conf: boolean = window.confirm(`Vraiment supprimer ${basename(entry.name)}?`)
 										if (conf === false) {
 											return
 										}
@@ -72,7 +72,32 @@ const DirView: Component<DirView.Attrs> = {
 										m.redraw()
 									}
 								}, "Supprimer"),
-							])
+								m("button", {
+									onclick: async (e: Event) => {
+										e.stopPropagation()
+
+										const newName: string | null = window.prompt("Nouveau nom:")
+										if (newName === null) {
+											return
+										}
+
+										let newPath = entry.name.split('/').reverse()
+										newPath[0] = newName
+										newPath = newPath.reverse()
+
+										try {
+											await api.request({ url: "/fs/mv", params: { path: entry.name, newpath: newPath.join("/") }, method: "POST" })
+										} catch (e) {
+											if (e.code == 400) {
+												window.alert("Incapable de renommer. Ce fichier existe-t-il déjà?")
+												return
+											}
+										}
+										await DirList.refresh(curPath)
+										m.redraw()
+									}
+								}, "Renommer"),
+							]),
 						)
 					}),
 				),
