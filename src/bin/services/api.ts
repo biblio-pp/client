@@ -1,4 +1,5 @@
 import m from "mithril"
+import Auth from "./api"
 import Mithril from "mithril"
 
 const api = {
@@ -22,6 +23,7 @@ const api = {
 		} catch (error) {
 			if (error.code == 401) {
 				m.route.set("/login", { next: m.route.get() })
+				Auth.tokenRemove()
 			}
 
 			throw error
