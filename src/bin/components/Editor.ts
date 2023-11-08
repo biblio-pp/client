@@ -1,6 +1,7 @@
 import EasyMDE from "easymde"
 import m, { Component } from "mithril"
 import FileModel from "../models/File"
+import { basename, dirname } from "../services/utils"
 
 declare namespace Editor {
 	interface Attrs {
@@ -52,6 +53,8 @@ function Editor(): Component<Editor.Attrs> {
 		},
 		view: (vnode) => {
 			return m("",
+				m(m.route.Link, { href: "/dir/" + dirname(vnode.attrs.path) }, "Retourner"),
+				m("h2", `Modification: ${basename(vnode.attrs.path)}`),
 				m("textarea"),
 				m("button", {
 					onclick: async () => {
