@@ -13,7 +13,7 @@ declare namespace FileView {
 const FileView: Component<FileView.Attrs> = {
 	view: (vnode) => {
 		return [
-			m(Editor, { path: vnode.attrs.path })
+			m(Editor, { path: decodeURI(vnode.attrs.path) })
 		]
 	}
 }

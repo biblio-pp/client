@@ -12,13 +12,13 @@ declare namespace DirView {
 
 const DirView: Component<DirView.Attrs> = {
 	oncreate: async (vnode) => {
-		await DirList.refresh(vnode.attrs.path)
+		await DirList.refresh(decodeURI(vnode.attrs.path || ""))
 	},
 	view: (vnode) => {
 		const dirs = DirList.dirs.map(e => ({ name: e, type: "dir" }))
 		const files = DirList.files.map(e => ({ name: e, type: "file" }))
 
-		const curPath = vnode.attrs.path || ""
+		const curPath = decodeURI(vnode.attrs.path || "")
 
 		let pathBuild = ""
 		const segments = curPath.split('/').map((dir) => {
