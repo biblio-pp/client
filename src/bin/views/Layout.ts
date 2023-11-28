@@ -1,6 +1,7 @@
 import m, { Component } from "mithril"
 import UserWidget from "../components/UserWidget"
 import Auth from "../models/Auth"
+import SearchBar from "../components/Search"
 
 const Layout: Component = {
 	view: function(vnode) {
@@ -9,7 +10,8 @@ const Layout: Component = {
 				m(m.route.Link, { href: "/", selector: "a.header-title-link" }, m("h2.header-title", "Intellicarnet")),
 				m("nav.menu", [
 				]),
-				m(UserWidget)
+				Auth.authenticated && m(SearchBar),
+				m(UserWidget),
 			]),
 			m("section", vnode.children)
 		])

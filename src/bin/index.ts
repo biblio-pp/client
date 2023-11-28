@@ -3,6 +3,7 @@ import TestView from "./views/Test"
 import LoginView from "./views/Login"
 import DirView from "./views/DirView"
 import FileView from "./views/FileView"
+import SearchView from "./views/Search"
 import Layout from "./views/Layout"
 
 m.route(document.body, "/", {
@@ -14,6 +15,11 @@ m.route(document.body, "/", {
 	"/login": {
 		render: function() {
 			return m(Layout, m(LoginView))
+		}
+	},
+	"/search/:query...": {
+		render: function(vnode) {
+			return m(Layout, m(SearchView, {key: m.route.param("query"), ...vnode.attrs}))
 		}
 	},
 	"/file/:path...": {

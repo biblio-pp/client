@@ -16,7 +16,7 @@
 	text-align: center;
 }
 
-.form-textbox, .form-button, .form-upload {
+.form-textbox, .form-button, .form-upload, .searchbar {
 	display: block;
 }
 
@@ -24,10 +24,15 @@
 	margin: .5em 0;
 }
 
-.form-textbox, .form-button {
+.form-textbox, .form-button, .searchbar {
 	border: 2px solid #aaaaaa;
 	border-radius: 0.5vmin;
 	transition-duration: 0.1s;
+}
+
+.searchbar {
+	height: 2em;
+	margin: auto 1em;
 }
 
 .form-textbox:focus, .form-button:focus {
