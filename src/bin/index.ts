@@ -5,6 +5,7 @@ import DirView from "./views/DirView"
 import FileView from "./views/FileView"
 import SearchView from "./views/Search"
 import Layout from "./views/Layout"
+import ConvoView from "./views/Convo"
 
 m.route(document.body, "/", {
 	"/": {
@@ -35,6 +36,11 @@ m.route(document.body, "/", {
 	"/dir/": {
 		render: function() {
 			return m(Layout, m(DirView))
+		}
+	},
+	"/convo": {
+		render: function() {
+			return m(Layout, m(ConvoView))
 		}
 	}
 })
