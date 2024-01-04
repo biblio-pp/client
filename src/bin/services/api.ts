@@ -1,9 +1,27 @@
 import m from "mithril"
 import Auth from "./api"
 import Mithril from "mithril"
+import { Socket, io } from "socket.io-client"
 
 const api = {
 	baseUrl: "http://localhost:5000",
+	sock: async () => {
+		try {
+			return io(api.baseUrl, {
+				withCredentials: true,
+				autoConnect: true,
+				extraHeaders: {
+					"Authorization": "Bearer " + api.token() || ""
+				},
+			})
+		} catch (e) {
+			if (e.code == 401) {
+				m.route.set("/login", { next: m.route.get() })
+				Auth.tokenRemove()
+			}
+			throw e
+		}
+	},
 	request: async <T>(params: { url: string } & Mithril.RequestOptions<any>): Promise<T> => {
 		const oldConfig = params.config
 		params.config = (xhr: XMLHttpRequest) => {

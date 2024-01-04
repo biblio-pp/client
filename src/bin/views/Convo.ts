@@ -1,4 +1,6 @@
 import m, { Component } from "mithril"
+import api from "../services/api"
+import { Socket } from "socket.io-client"
 
 class Msg {
 	content: string
@@ -11,21 +13,28 @@ class Msg {
 }
 
 let msgs: Msg[] = [
-	new Msg("hi", "user"),
-	new Msg("hello2", "ai"),
-	new Msg("hi", "user"),
-	new Msg("hello", "ai"),
 ]
 
 const ConvoSchema = {
+	sock: undefined as Socket | undefined,
 	msg: "",
 	send: async () => {
-		msgs.unshift(new Msg(ConvoSchema.msg, "user"))
-		ConvoSchema.msg = ""
-	}
+		if (ConvoSchema.sock !== undefined && ConvoSchema.sock.connected) {
+			msgs.unshift(new Msg(ConvoSchema.msg, "user"))
+			ConvoSchema.sock.emit("convo", ConvoSchema.msg, (resp: string) => {
+				msgs.unshift(new Msg(resp, "ai"))
+				m.redraw()
+			})
+			ConvoSchema.msg = ""
+			return true
+		}
+	},
 }
 
 const ConvoView: Component = {
+	oninit: async () => {
+		ConvoSchema.sock = await api.sock()
+	},
 	view: () => {
 		return [
 			m(".chat-box",
@@ -45,9 +54,10 @@ const ConvoView: Component = {
 				},
 				onkeypress: async (e: KeyboardEvent) => {
 					if (e.key == "Enter") {
-						await ConvoSchema.send()
-						const { target } = e
-						if (target) (target as HTMLInputElement).value = ""
+						if (await ConvoSchema.send()) {
+							const { target } = e
+							if (target) (target as HTMLInputElement).value = ""
+						}
 					}
 				},
 			})

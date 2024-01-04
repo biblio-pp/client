@@ -6,6 +6,10 @@
 	color: red
 }
 
+.msg-ai, .msg-user {
+	white-space: pre-wrap;
+}
+
 .chat-box {
 	display: flex;
 	flex-direction: column-reverse;
