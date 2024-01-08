@@ -23,10 +23,7 @@ const ConvoSchema = {
 	send: async () => {
 		if (ConvoSchema.sock !== undefined && ConvoSchema.sock.connected) {
 			msgs.unshift(new Msg(ConvoSchema.msg, "user"))
-			ConvoSchema.sock.emit("convo", ConvoSchema.msg, (resp: string) => {
-				msgs.unshift(new Msg(resp, "ai"))
-				m.redraw()
-			})
+			ConvoSchema.sock.emit("convo", ConvoSchema.msg)
 			ConvoSchema.msg = ""
 			return true
 		}
@@ -36,6 +33,10 @@ const ConvoSchema = {
 const ConvoView: Component = {
 	oninit: async () => {
 		ConvoSchema.sock = await api.sock()
+		ConvoSchema.sock.on("convo", (data) => {
+			msgs.unshift(new Msg(data, "ai"))
+			m.redraw()
+		})
 	},
 	view: () => {
 		return [
