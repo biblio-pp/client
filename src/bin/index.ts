@@ -1,5 +1,4 @@
 import m from "mithril"
-import TestView from "./views/Test"
 import LoginView from "./views/Login"
 import DirView from "./views/DirView"
 import FileView from "./views/FileView"
@@ -10,7 +9,8 @@ import ConvoView from "./views/Convo"
 m.route(document.body, "/", {
 	"/": {
 		render: function() {
-			return m(Layout, m(TestView))
+			m.route.set("/dir")
+			return m("")
 		}
 	},
 	"/login": {
@@ -20,17 +20,17 @@ m.route(document.body, "/", {
 	},
 	"/search/:query...": {
 		render: function(vnode) {
-			return m(Layout, m(SearchView, {key: m.route.param("query"), ...vnode.attrs}))
+			return m(Layout, m(SearchView, { key: m.route.param("query"), ...vnode.attrs }))
 		}
 	},
 	"/file/:path...": {
 		render: function(vnode) {
-			return m(Layout, m(FileView, {key: m.route.param("path"), ...vnode.attrs}))
+			return m(Layout, m(FileView, { key: m.route.param("path"), ...vnode.attrs }))
 		}
 	},
 	"/dir/:path...": {
 		render: function(vnode) {
-			return m(Layout, m(DirView, {key: m.route.param("path"), ...vnode.attrs}))
+			return m(Layout, m(DirView, { key: m.route.param("path"), ...vnode.attrs }))
 		}
 	},
 	"/dir/": {
