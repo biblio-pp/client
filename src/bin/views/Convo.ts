@@ -62,7 +62,8 @@ const ConvoView: Component = {
 						}
 					}
 				},
-			})
+			}),
+			m("p", m("i", "N.B.: "), "L'IA cherche l'information dans les fichiers basé seulement sur votre premier message. Rafraîchissez la page pour parler d'un autre sujet."),
 		]
 	}
 }

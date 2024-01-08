@@ -125,7 +125,20 @@ const DirView: Component<DirView.Attrs> = {
 						m.redraw()
 					}
 				}, "Nouveau fichier"),
+				m("button", {
+					onclick: async () => {
+						const res: boolean | null = window.confirm("Vraiment scanner? (S.V.P. pas utiliser ce bouton trop)")
+						if (!res) {
+							return;
+						}
+
+						let resp: {msg: string, scanned: string[]} = await api.request({ url: "/ai/scan", method: "POST"})
+						window.alert(`${resp.scanned.length} documents scannés\n${resp.scanned.map((s) => `- ${s}`).join("\n")}`)
+						m.redraw()
+					}
+				}, "Scanner"),
 			),
+			m("p", m("i", "N.B.: "), "L'IA ne peut pas lire vos fichiers ou vos modifications sans faire un scan. (cliquer bouton au-dessus)")
 		]
 
 	}
