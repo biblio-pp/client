@@ -6,9 +6,13 @@ import { htmlPlugin } from "@craftamap/esbuild-plugin-html"
 const baseConfig = {
 	logLevel: "info",
 	entryPoints: ['src/bin/index.ts', 'src/css/style.css'],
+	platform: "browser",
 	bundle: true,
 	outdir: "dist/",
 	metafile: true,
+	loader: {
+		'.svg': 'file',
+	},
 	plugins: [
 		htmlPlugin({
 			files: [

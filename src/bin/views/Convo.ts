@@ -1,6 +1,8 @@
 import m, { Component } from "mithril"
 import api from "../services/api"
 import { Socket } from "socket.io-client"
+import user_icon from "../../img/user.svg"
+import ai_icon from "../../img/ai.svg"
 
 class Msg {
 	content: string
@@ -39,11 +41,10 @@ const ConvoView: Component = {
 		return [
 			m(".chat-box",
 				msgs.map((msg) => {
-					if (msg.type === "user") {
-						return m(".msg-user", msg.content)
-					} else {
-						return m(".msg-ai", msg.content)
-					}
+					return m(msg.type == "user" ? ".msg-user" : ".msg-ai",
+						m("img.profile", { src: msg.type == "user" ? user_icon : ai_icon }),
+						m("p.msg-content", msg.content)
+					)
 				}),
 			),
 			m("input.form-textbox", {
